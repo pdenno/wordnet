@@ -1,4 +1,5 @@
-# Clj-WordNet [![Build Status](https://secure.travis-ci.org/clojusc/wordnet.png)](http://travis-ci.org/clojusc/wordnet)
+# Clojure WordNet
+[![Build Status](https://secure.travis-ci.org/clojusc/wordnet.png)](http://travis-ci.org/clojusc/wordnet)
 
 A thin/partial wrapper around some [JWI](http://projects.csail.mit.edu/jwi/)
 functionality, for interfacing the [WordNet](http://wordnet.princeton.edu/)
@@ -23,7 +24,7 @@ There is an initial version hosted at [Clojars](https://clojars.org/clojusc/word
 For leiningen include a dependency:
 
 ```clojure
-[clojusc/wordnet "0.4.0"]
+[clojusc/wordnet "1.0.0"]
 ```
 
 For maven-based projects, add the following to your `pom.xml`:
@@ -32,11 +33,9 @@ For maven-based projects, add the following to your `pom.xml`:
 <dependency>
   <groupId>clojusc</groupId>
   <artifactId>wordnet</artifactId>
-  <version>0.4.0</version>
+  <version>1.0.0</version>
 </dependency>
 ```
-
-A snapshot version is also available, use ```"0.1.1-SNAPSHOT"```.
 
 ## WordNet Database
 
@@ -48,7 +47,7 @@ instructions above.
 ## Quick Examples
 
 ```clojure
-(require '[clj-wordnet.core :as wordnet])
+(require '[wordnet.core :as wordnet])
 (def dict (wordnet/make-dictionary "../path-to/wordnet/dict/"))
 
 (def dog (first (dict "dog" :noun)))
