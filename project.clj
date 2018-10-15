@@ -1,4 +1,4 @@
-(defproject clojusc/wordnet "0.4.0"
+(defproject clojusc/wordnet "1.0.0-SNAPSHOT"
   :description "A WordNet/JWI wrapper library"
   :url "https://github.com/clojusc/wordnet"
   :license {
@@ -7,7 +7,7 @@
   :dependencies [
     [clojusc/jwi "2.4.0"]
     [org.clojure/clojure "1.9.0"]]
-  :global-vars { *warn-on-reflection* true}
+  :global-vars {*warn-on-reflection* true}
   :profiles {
     :dev {
       :plugins [
