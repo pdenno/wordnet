@@ -1,13 +1,17 @@
-(ns clj-wordnet.core
-  (:require [clojure.java.io :refer [file]]
-            [clojure.string :refer [upper-case lower-case]]
-            [clj-wordnet.coerce :as coerce]
-            [clojure.string :as s]
-            [clojure.set :refer :all])
-  (:import [edu.mit.jwi IDictionary Dictionary RAMDictionary]
-           [edu.mit.jwi.item IIndexWord ISynset ISynsetID SynsetID IWordID WordID IWord POS IPointer]
-           [edu.mit.jwi.data ILoadPolicy]
-           [edu.mit.jwi.morph WordnetStemmer]))
+(ns wordnet.core
+  (:require
+    [clojure.java.io :refer [file]]
+    [clojure.set :refer :all]
+    [clojure.string :as s]
+    [clojure.string :refer [upper-case lower-case]]
+    [wordnet.coerce :as coerce])
+  (:import
+    (edu.mit.jwi IDictionary Dictionary RAMDictionary)
+    (edu.mit.jwi.data ILoadPolicy)
+    (edu.mit.jwi.item IIndexWord ISynset ISynsetID SynsetID
+                      IWordID WordID IWord POS IPointer)
+    (edu.mit.jwi.morph WordnetStemmer)))
+
 
 ; JWI ICacheDictionary is not threadsafe
 (def coarse-lock (Object.))
