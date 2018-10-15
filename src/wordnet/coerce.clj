@@ -1,14 +1,16 @@
-(ns clj-wordnet.coerce
-  (:require [clojure.string :as str]
-            [clojure.set :refer [map-invert]])
-  (:import [edu.mit.jwi.item POS Pointer]
-           [java.lang.reflect Field]))
+(ns wordnet.coerce
+  (:require
+    [clojure.set :refer [map-invert]]
+    [clojure.string :as str])
+  (:import
+    (edu.mit.jwi.item POS Pointer)
+    (java.lang.reflect Field)))
 
 (defn to-keyword [k]
   (-> k
       name
       (str/replace #"[_ ]" "-")
-      str/lower-case 
+      str/lower-case
       keyword))
 
 (def keyword->pointer

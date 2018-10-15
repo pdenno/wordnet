@@ -1,6 +1,6 @@
-(ns clj-wordnet.test-client
-  (:use [clojure.test]
-        [clj-wordnet.core]))
+(ns wordnet.test-client
+  (:require
+    [wordnet.core :as wordnet]))
 
 ;; =========================================================================
 ;; Don't change the path - it is used for running local and Travis CI builds
@@ -11,4 +11,4 @@
 ;;
 ;;    $ git submodule update --init data
 ;;
-(def wordnet (make-dictionary "./data/dict"))
+(def dict (wordnet/make-dictionary "./data/dict"))
