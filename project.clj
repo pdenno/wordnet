@@ -11,6 +11,10 @@
   :profiles {
     :dev {
       :plugins [
-        [lein-shell "0.5.0"]]}}
+        [lein-shell "0.5.0"]]}
+    :test {
+      :plugins [
+        [lein-ltest "0.3.0"]]}}
   :aliases {
-    "install-jwi" ["shell" "resources/scripts/install-jwi.sh"]})
+    "install-jwi" ["shell" "resources/scripts/install-jwi.sh"]
+    "test" ["with-profile" "+test" "ltest"]})
