@@ -1,4 +1,4 @@
-(defproject clojusc/jwi "2.4.0-SNAPSHOT"
+(defproject clojusc/jwi "2.4.0"
   :description "The MIT Java Wordnet Interface"
   :url "https://projects.csail.mit.edu/jwi/"
   :license {
