@@ -238,14 +238,15 @@
 
 (defn synonyms
   [^IDictionary dict ^String word ^Keyword pos]
-  (concat
-    (->> (dict word pos)
-         (mapcat (comp words synset))
-         (reduce (fn [acc x] (conj acc (:lemma x)))
-                 #{}))
-    (->> (dict word pos)
-         (mapcat (comp #(related-synsets % :hypernym) synset))
-         (mapcat words)
-         (reduce (fn [acc x] (conj acc (:lemma x)))
-                 #{}))))
+  (let [results (dict word pos)]
+    (concat
+      (->> results
+           (mapcat (comp words synset))
+           (reduce (fn [acc x] (conj acc (:lemma x)))
+                   []))
+      (->> results
+           (mapcat (comp #(related-synsets % :hypernym) synset))
+           (mapcat words)
+           (reduce (fn [acc x] (conj acc (:lemma x)))
+                   [])))))
 

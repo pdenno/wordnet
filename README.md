@@ -26,7 +26,7 @@ To build and install the library locally, run:
 For a lein-based project, add the following to your `:dependencies`:
 
 ```clojure
-[clojusc/wordnet "1.0.0"]
+[clojusc/wordnet "1.1.0-SNAPSHOT"]
 ```
 
 For maven-based projects, add the following to your `pom.xml`:
@@ -35,7 +35,7 @@ For maven-based projects, add the following to your `pom.xml`:
 <dependency>
   <groupId>clojusc</groupId>
   <artifactId>wordnet</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -84,21 +84,26 @@ Now we can do things with our defined word:
     has been domesticated by man since prehistoric times; occurs in many breeds;
     \"the dog barked all night\""
 
-(map :lemma (wordnet/words (wordnet/synset dog)))
-=> ("dog" "domestic_dog", "Canis_familiaris")
+(mapv :lemma (wordnet/words (wordnet/synset dog)))
+=> ["dog" "domestic_dog", "Canis_familiaris"]
 
 (def frump (dict "frump#n#1"))
 
-(map :lemma (wordnet/related-words frump :derivationally-related))
-=> ("frumpy")
+(mapv :lemma (wordnet/related-words frump :derivationally-related))
+=> ["frumpy"]
 
 (->> :hypernym
      (wordnet/related-synsets (wordnet/synset dog))
      (mapcat wordnet/words)
      (reduce (fn [acc x] (conj acc (:lemma x)))
-             #{}))
-=> ("domestic_animal" "domesticated_animal" "canine" "canid")
+             []))
+=> ["canine" "canid" "domestic_animal" "domesticated_animal"]
+```
 
+The previous examples just used the first definition of dog; the following use
+all nouns in the WordNet dictionary for "dog":
+
+```clj
 (->> (dict "dog" :noun)
      (mapcat (comp wordnet/words wordnet/synset))
      (reduce (fn [acc x] (conj acc (:lemma x)))
@@ -121,7 +126,7 @@ Now we can do things with our defined word:
     "villain" "scoundrel" "sausage" "catch" "stop" "support"]
 ```
 
-The previous example have been merged into a single function now offered for
+The previous examples have been merged into a single function now offered for
 convenience:
 
 ```clj
