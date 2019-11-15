@@ -26,7 +26,7 @@ To build and install the library locally, run:
 For a lein-based project, add the following to your `:dependencies`:
 
 ```clojure
-[clojusc/wordnet "1.1.0-SNAPSHOT"]
+[clojusc/wordnet "1.2.0"]
 ```
 
 For maven-based projects, add the following to your `pom.xml`:
@@ -35,7 +35,7 @@ For maven-based projects, add the following to your `pom.xml`:
 <dependency>
   <groupId>clojusc</groupId>
   <artifactId>wordnet</artifactId>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>1.2.0</version>
 </dependency>
 ```
 
