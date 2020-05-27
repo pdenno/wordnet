@@ -1,9 +1,6 @@
 (ns wordnet.core
   (:require
     [clojure.java.io :refer [file]]
-    [clojure.set :refer :all]
-    [clojure.string :as s]
-    [clojure.string :refer [upper-case lower-case]]
     [wordnet.coerce :as coerce])
   (:import
     (clojure.lang Keyword)
@@ -12,7 +9,6 @@
     (edu.mit.jwi.item IIndexWord ISynset ISynsetID SynsetID
                       IWordID WordID IWord POS IPointer)
     (edu.mit.jwi.morph WordnetStemmer)))
-
 
 ; JWI ICacheDictionary is not threadsafe
 (def coarse-lock (Object.))
@@ -28,8 +24,7 @@
         :dict dict }))
 
 (defn- from-word
-  "Descends down into each word, expanding synonyms that have not been
-   previously seen"
+  "Descends down into each word, expanding synonyms that have not been previously seen"
   [^IDictionary dict ^IWord word]
   (with-meta
     { :id     (str (.getID word))
@@ -85,17 +80,17 @@
                                                            (coerce/pos part-of-speech))))]
        (mapcat (memfn ^IIndexWord getWordIDs) index-words)))
   ([^IDictionary dict lemma part-of-speech]
-     (let [pos (coerce/pos part-of-speech)]
-       (if *stem?*
-         (mapcat (memfn ^IIndexWord getWordIDs)
-                 (for [stem (stem dict lemma part-of-speech)
-                       :let [^IIndexWord index-word (locking coarse-lock (.getIndexWord dict stem (coerce/pos part-of-speech)))]
-                       :when index-word]
-                   index-word))
-         (when-let [^IIndexWord index-word (locking coarse-lock (.getIndexWord
-                                                                 dict lemma
-                                                                 (coerce/pos part-of-speech)))]
-           (.getWordIDs index-word))))))
+   (if *stem?*
+     (mapcat (memfn ^IIndexWord getWordIDs)
+             (for [stem (stem dict lemma part-of-speech)
+                   :let [^IIndexWord index-word (locking coarse-lock (.getIndexWord dict stem (coerce/pos part-of-speech)))]
+                   :when index-word]
+               index-word))
+     (when-not (= lemma "")
+       (when-let [^IIndexWord index-word (locking coarse-lock (.getIndexWord
+                                                               dict lemma
+                                                               (coerce/pos part-of-speech)))]
+         (.getWordIDs index-word))))))
 
 (defn make-dictionary
   "Initializes a dictionary implementation that mounts files on disk
@@ -146,8 +141,7 @@
 
         (fn [& args]
           (let [stem #{:stem}]
-            ;; If a user puts :stem anywhere in the arg list, turn
-            ;; stemming on
+            ;; If a user puts :stem anywhere in the arg list, turn stemming on. 
             (if (some stem args)
               (binding [*stem?* true]
                 (apply lookup (remove stem args)))
